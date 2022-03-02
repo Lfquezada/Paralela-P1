@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 
 int main(int argc, char* argv[]) {
   double err, t0, tl, tr;
   int N;
+  double c = pow(10, -5);
 
   if(argc > 1) {
     err = strtol(argv[1], NULL, 10); // Valor de error
