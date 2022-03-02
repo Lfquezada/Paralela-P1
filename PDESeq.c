@@ -21,3 +21,7 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+
+double ecuacion (double Tj, double c, double ti, double x, double Tjp1, double Tjm1){
+return Tj
+}
