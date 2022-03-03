@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 // gcc PDESeq.c -o PDESeq
-// ./PDESeq 0.0001 50 30 10 100
+// ./PDESeq 0.0001 5 30 10 100
+
+#define n 10
 
 int main(int argc, char* argv[]) {
   double err, t0, tl, tr;
-  int N;
+  int N=n;
   double c = pow(10, -5);
   double vec_sol;
 
@@ -21,11 +24,24 @@ int main(int argc, char* argv[]) {
 
   printf("VALORES: %f %d %f %f %F\n", err,N,t0,tl,tr);
 
-  // 1. División del dominio en intervalos discretos (tiempo y distancia) 
+  // 1. División del dominio en intervalos discretos (tiempo y distancia)
 
   // 2. Ajustar los valores iniciales de los vectores de solución Ti y Ti+1, para tiempo i
+  //double Ti_p1[N] = { 0 };
+
+  double Ti[N];
+  memcpy(Ti, (int[]){ t0 }, N*sizeof(int));
+
+  for(int i=0; i<N; i++) {
+    printf("%f ", Ti[i]);
+  }
 
   // 3. For (resultado en vec_sol)
+  while (err > (1000)) {
+    for (int j = 1; j <= N-1; j++) {
+      // Calcular Tj(ti_p1)
+    }
+  }
 
   printf("Vector solución: %f\n", vec_sol);
 
