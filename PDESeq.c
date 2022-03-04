@@ -1,3 +1,10 @@
+/*Universidad del Valle de Guatemala
+  Computacion Paralela y Distribuida
+  Jennifer Sandoval   18962
+  Luis Quezada        18028
+  Esteban del Valle   18221
+  Proyecto 1 
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -6,9 +13,8 @@
 // gcc PDESeq.c -o PDESeq
 // ./PDESeq 1 10 100 200 10000
 
-//#define n 10
 #define N 10
-#define L 5
+#define L 5 // Longitud de la barra
 double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n);
 void copyArray(double arr[], double copy[], int size);
 void displayArray(double arr[], int size);
@@ -16,14 +22,10 @@ void displayArray(double arr[], int size);
 
 int main(int argc, char* argv[]) {
   double err, t0, tl, tr;
-  int teri =100;
+  int iterations =100;
   int cont = 0;
 
-  //int N=n;
-  //const int N = 10;
   double c = pow(10, -5);
-  //const int L = 50;
-  double vec_sol;
 
   if(argc > 1) {
     printf("\n");
@@ -32,11 +34,10 @@ int main(int argc, char* argv[]) {
     t0 = strtol(argv[2], NULL, 10); // Temperatura inicial
     tl = strtol(argv[3], NULL, 10); // Temperatura de la frontera izquierda
     tr = strtol(argv[4], NULL, 10); // Temperatura de la frontera derecha
-    teri = atoi(argv[5]);
+    iterations = atoi(argv[5]);
   }
 
-  printf("VALORES: %f %f %f %F %d \n", err,t0,tl,tr, teri);
-  printf("\n");
+  //printf("VALORES: %f %f %f %F %d \n", err,t0,tl,tr, iterations);
 
 
   // 1. División del dominio en intervalos discretos (tiempo y distancia)
@@ -50,7 +51,6 @@ int main(int argc, char* argv[]) {
   for (int i = 0; i<N; i++){
     Ti[i] = t0;
     Ti_p1[i] = 0;
-
   }
 
 
@@ -58,14 +58,8 @@ int main(int argc, char* argv[]) {
   //Por si acaso
   //memcpy(Ti, (int[]){ t0 }, N*sizeof(int));
 
-  
-   //displayArray(Ti,N);
   // 3. For (resultado en vec_sol)
-  printf("%d", teri);
-  printf("\n");
-  printf("%d",cont);
-  printf("\n");
-  while (cont < teri) {
+  while (cont < iterations) {
     for (int i = 1; i <= N-1; i++) {
       double Ti_p1[N] = {0};  //Cada iteracion de tiempo reiniciar el vector de resultados en 0
       for (int j=0; j<N; j++){
@@ -75,8 +69,6 @@ int main(int argc, char* argv[]) {
       }
       //displayArray(Ti,N);
       copyArray(Ti_p1,Ti,N);
-  
-
     }
     cont++;
   }
@@ -104,17 +96,17 @@ double ecuacion(double Ti[N],int j, double c,double dt,double x, double tl, doub
   return result;
 }
 
-
+// Function to copy the elements of an array in other
 void copyArray(double arr[], double copy[], int size)
 {
-  // loop to iterate through array
+  
   for (int i = 0; i < size; ++i)
   {
     copy[i] = arr[i];
   }
 }
 
-// function to display an array
+// Function to display an array
 void displayArray(double arr[], int size){
   for (int i = 0; i < size; i++) {
     printf("%f ",arr[i]);
