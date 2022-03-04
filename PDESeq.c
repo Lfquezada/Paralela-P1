@@ -8,7 +8,7 @@
 
 //#define n 10
 #define N 10
-#define L 50
+#define L 5
 double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n);
 void copyArray(double arr[], double copy[], int size);
 void displayArray(double arr[], int size);
@@ -45,16 +45,21 @@ int main(int argc, char* argv[]) {
 
   // 2. Ajustar los valores iniciales de los vectores de solución Ti y Ti+1, para tiempo i
   //double Ti_p1[N] = { 0 };
+  double Ti[N];
+  double Ti_p1[N];
+  for (int i = 0; i<N; i++){
+    Ti[i] = t0;
+    Ti_p1[i] = 0;
 
-  double Ti[N] = {t0};
-  double Ti_p1[N] = {0};
+  }
+
 
   //double Ti[N] = {t0};
   //Por si acaso
   //memcpy(Ti, (int[]){ t0 }, N*sizeof(int));
 
   
-
+   //displayArray(Ti,N);
   // 3. For (resultado en vec_sol)
   printf("%d", teri);
   printf("\n");
@@ -68,9 +73,9 @@ int main(int argc, char* argv[]) {
         double res = ecuacion(Ti, j, c, i, L, tl, tr, N);
         Ti_p1[j]=res;
       }
-
+      //displayArray(Ti,N);
       copyArray(Ti_p1,Ti,N);
-      displayArray(Ti,N);
+  
 
     }
     cont++;
@@ -82,18 +87,18 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n) {
-  double result = 0;
+double ecuacion(double Ti[N],int j, double c,double dt,double x, double tl, double tr, int n) {
+  double result;
   if(j==0){
-    result = Ti[j]+((c*dt/(x*x)))*(tl-(2*Ti[j])+Ti[j+1]);
+    result = Ti[j]+(((c*dt/(x*x)))*(tl-(2*Ti[j])+Ti[j+1]));
   }
 
   else if(j==(n-1)){
-    result = Ti[j]+((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+tr);
+    result = Ti[j]+(((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+tr));
   }
 
   else{
-    result = Ti[j]+((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]);
+    result = Ti[j]+(((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
   }
 
   return result;
