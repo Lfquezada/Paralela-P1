@@ -11,7 +11,7 @@
 #include <string.h>
 
 // gcc PDESeq.c -o PDESeq
-// ./PDESeq 1 10 30 100 10000
+// ./PDESeq 1 10 30 100 1000
 
 #define N 5000 // Intervalos de distancia
 #define L 5 // Longitud de la barra
@@ -39,6 +39,10 @@ int main(int argc, char* argv[]) {
   }
 
   //printf("VALORES: %f %f %f %F %d \n", err,t0,tl,tr, iterations);
+  
+  // Mitad de la barra para cálculo del error
+  int half = (int)((double)N/(double)2);
+  //printf(" %d half -------\n",half);
 
   // 1. División del dominio en intervalos discretos (tiempo y distancia)
 
