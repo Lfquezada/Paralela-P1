@@ -11,7 +11,7 @@
 #include <string.h>
 
 // gcc PDESeq.c -o PDESeq
-// ./PDESeq 1 10 30 100 1000
+// ./PDESeq 1 10 30 100 1000000
 
 #define N 5000 // Intervalos de distancia
 #define L 5 // Longitud de la barra
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
   double err, t0, tl, tr;
   int iterations =100;
   int cont = 0;
-  double c = pow(10, -5);
+  double c = pow(10, -1);
 
   if(argc > 1) {
     printf("\n");
