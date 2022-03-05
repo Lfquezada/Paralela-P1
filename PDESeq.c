@@ -11,10 +11,10 @@
 #include <string.h>
 
 // gcc PDESeq.c -o PDESeq
-// ./PDESeq 1 10 30 100 1000000
+// ./PDESeq 1 50 30 100 10000
 
 #define N 5000 // Intervalos de distancia
-#define L 5 // Longitud de la barra
+#define L 1 // Longitud de la barra
 #define M 100 // Intervalos de tiempo
 double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n);
 void copyArray(double arr[], double copy[], int size);
