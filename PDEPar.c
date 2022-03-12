@@ -52,10 +52,11 @@ int main(int argc, char* argv[]) {
 
   // 3. For (resultado en vec_sol)
   for (int i = 1; i <= iterations; i++) {
-    Ti_p1 = array_dinamico(N,0.0); //Cada iteracion de tiempo reiniciar el vector de resultados en 0
+    //Ti_p1 = array_dinamico(N,0.0); //Cada iteracion de tiempo reiniciar el vector de resultados en 0
     for (int j=0; j<N; j++){
       // Calculo de las temperaturas 
       double res = ecuacion(Ti, j, c, deltat, deltax, tl, tr, N);
+      //printf("%f\n",res);
       *(Ti_p1+j)=res;
     }
     copyArray(Ti_p1,Ti,N);
