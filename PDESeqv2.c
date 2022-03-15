@@ -11,6 +11,7 @@
 #include <string.h>
 #include <time.h>
 
+// Compilar y correr 
 // gcc PDESeqv2.c -o PDESeqv2
 // ./PDESeqv2 5000 50 30 100 1000
 
@@ -25,7 +26,6 @@ int main(int argc, char* argv[]) {
   clock_t c_clock;
   double t0, tl, tr;
   int N,iterations = 100;
-  int cont = 0;
   double c = pow(10, -1);
 
   if (argc == 1) {
@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) {
   double Ti[N];
   double Ti_p1[N];
 
+  //Llenar los vectores de temperaturas iniciales y de solucion con la temperatura inicial y 0 respectivamente
   for (int i = 0; i<N; i++){
     Ti[i] = t0;
     Ti_p1[i] = 0;
@@ -63,7 +64,7 @@ int main(int argc, char* argv[]) {
   // 3. For (resultado en vec_sol)
   for (int i = 1; i <= iterations; i++) {
     for (int j=0; j<N; j++) {
-      // Calculo de las temperaturas 
+      // Calculo de las temperaturas en cada segmento
       double res = ecuacion(Ti, j, c, deltat, deltax, tl, tr, N);
       Ti_p1[j] = res;
     }
@@ -82,14 +83,15 @@ int main(int argc, char* argv[]) {
 
 double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n) {
   double result;
+  //Calculo para la primera temperatura
   if(j==0){
     result = Ti[j]+(((c*dt/(x*x)))*(tl-(2*Ti[j])+Ti[j+1]));
   }
-
+  //Calculo para la ultima temperatura
   else if(j==(n-1)){
     result = Ti[j]+(((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+tr));
   }
-
+  //Calculo para las temperaturas del medio
   else{
     result = Ti[j]+(((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
   }
