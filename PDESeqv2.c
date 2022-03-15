@@ -9,10 +9,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <omp.h>
+#include <time.h>
 
-// gcc-11 PDEPar.c -fopenmp -o PDEPar
-// ./PDEPar 5000 50 30 100 1000
+// gcc PDESeqv2.c -o PDESeqv2
+// ./PDESeqv2 5000 50 30 100 1000
 
 #define L 5 // Longitud de la barra
 
@@ -22,6 +22,7 @@ void displayArray(double arr[], int size);
 
 
 int main(int argc, char* argv[]) {
+  clock_t c_clock;
   double t0, tl, tr;
   int N,iterations = 100;
   int cont = 0;
@@ -40,8 +41,8 @@ int main(int argc, char* argv[]) {
 
   //printf("VALORES: %f %f %f %f %d \n", N,t0,tl,tr, iterations);
 
-  // Tiempo paralelo con omp
-  double t_ini = omp_get_wtime();
+  // Tiempo POSIX
+  c_clock = clock();
   
   // Mitad de la barra para cálculo del error
   int half = (int)((double)N/(double)2);
@@ -73,8 +74,8 @@ int main(int argc, char* argv[]) {
   displayArray(Ti,N);
 
   // Mostrar delta de tiempo
-  double t_fin = omp_get_wtime();
-  printf("Tiempo: %f\n",(t_fin - t_ini));
+  c_clock = clock() - c_clock;
+  printf("Tiempo: %f\n",((float)c_clock)/CLOCKS_PER_SEC);
 
   return 0;
 }
