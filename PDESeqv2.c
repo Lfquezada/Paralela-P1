@@ -13,7 +13,7 @@
 
 // Compilar y correr 
 // gcc PDESeqv2.c -o PDESeqv2
-// ./PDESeqv2 5000 50 30 100 1000
+// ./PDESeqv2 5000 50 30 100 1000000
 
 #define L 5 // Longitud de la barra
 
