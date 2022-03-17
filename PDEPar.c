@@ -66,6 +66,7 @@ int main(int argc, char* argv[]) {
 
 double temp_extremos[2*N]; //Array de tamaño 2N en el cual se encuentran las temperaturas de los extremos para segmento de la barra
   for (int i = 1; i <= iterations; i++) {
+    #pragma omp paraller for
     for (int j=0; j<N; j++) {
       // Calculo de las temperaturas
       int thread_ID = omp_get_thread_num(); // Obteniendo el ID del hilo que se está ejecutando
@@ -114,7 +115,7 @@ void copyArray(double arr[], double copy[], int size)
 }
 
 // Funcion que sirve para mostrar el contenido de un array
-void displayArray(double arr[], int size){
+void displayArray(double arr[], int size) {
   for (int i = 0; i < size; i++) {
     printf("%f ",arr[i]);
     }
