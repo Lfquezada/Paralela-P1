@@ -18,7 +18,6 @@
 
 #define L 5 // Longitud de la barra
 
-double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n);
 void copyArray(double arr[], double copy[], int size);
 void displayArray(double arr[], int size);
 
@@ -65,17 +64,29 @@ int main(int argc, char* argv[]) {
   }
 
 double temp_extremos[2*N]; //Array de tamaño 2N en el cual se encuentran las temperaturas de los extremos para segmento de la barra
-  for (int i = 1; i <= iterations; i++) {
-    #pragma omp paraller for
-    for (int j=0; j<N; j++) {
-      // Calculo de las temperaturas
-      int thread_ID = omp_get_thread_num(); // Obteniendo el ID del hilo que se está ejecutando
-      double res = ecuacion(Ti, j, c, deltat, deltax, tl, tr, N);
-      Ti_p1[j] = res;
-      
+for (int i = 1; i <= iterations; i++) {
+  #pragma omp paraller for
+  for (int j=0; j<N; j++) {
+    // Calculo de las temperaturas
+    int thread_ID = omp_get_thread_num(); // Obteniendo el ID del hilo que se está ejecutando
+    double res = 0;
+    if(j==0){
+      res = Ti[j]+(((c*deltat/(deltax*deltax)))*(tl-(2*Ti[j])+Ti[j+1]));
     }
-    copyArray(Ti_p1,Ti,N);
+    //Calculo para la ultima temperatura
+    else if(j==(N-1)){
+      res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+tr));
+    }
+    //Calculo para las temperaturas del medio
+    else{
+      res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
+    }
+
+    Ti_p1[j] = res;
+    
   }
+  copyArray(Ti_p1,Ti,N);
+}
 
   // Mostrar barra final
   displayArray(Ti,N);
@@ -87,22 +98,6 @@ double temp_extremos[2*N]; //Array de tamaño 2N en el cual se encuentran las te
   return 0;
 }
 
-double ecuacion(double Ti[],int j, double c,double dt,double x, double tl, double tr, int n) {
-  double result;
-  //Calculo para la primera temperatura
-  if(j==0){
-    result = Ti[j]+(((c*dt/(x*x)))*(tl-(2*Ti[j])+Ti[j+1]));
-  }
-  //Calculo para la ultima temperatura
-  else if(j==(n-1)){
-    result = Ti[j]+(((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+tr));
-  }
-  //Calculo para las temperaturas del medio
-  else{
-    result = Ti[j]+(((c*dt/(x*x)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
-  }
-  return result;
-}
 
 // Funcion que sirve para copiar los elementos de un array en otro
 void copyArray(double arr[], double copy[], int size)
