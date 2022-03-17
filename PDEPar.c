@@ -14,7 +14,7 @@
 // Compilar y correr 
 // gcc-11 PDEPar.c -fopenmp -o PDEPar
 // gcc PDEPar.c -fopenmp -o PDEPar
-// ./PDEPar 5000 50 30 100 1000000 16
+// ./PDEPar 5000 50 30 100 1000000 8
 
 #define L 5 // Longitud de la barra
 

@@ -14,7 +14,7 @@
 // Compilar y correr 
 //  gcc-11 PDEPar_while.c -fopenmp -o PDEPar_while
 //  gcc PDEPar_while.c -fopenmp -o PDEPar_while
-// ./PDEPar_while 5000 50 30 100 1000000 4
+//  ./PDEPar_while 5000 50 30 100 1000000 8
 
 #define L 5 // Longitud de la barra
 
