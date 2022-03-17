@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
   tr = strtol(argv[4], NULL, 10); // Temperatura de la frontera derecha
   iterations = atoi(argv[5]);
   int thread_count = atoi(argv[6]);
-  omp_set_num_threads(T);
+  omp_set_num_threads(thread_count);
 
   //printf("VALORES: %f %f %f %f %d \n", N,t0,tl,tr, iterations);
 
