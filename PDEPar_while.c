@@ -12,9 +12,9 @@
 #include <omp.h>
 
 // Compilar y correr 
-// gcc-11 PDEPar.c -fopenmp -o PDEPar
-// gcc PDEPar.c -fopenmp -o PDEPar
-// ./PDEPar 5000 50 30 100 1000000 16
+//  gcc-11 PDEPar_while.c -fopenmp -o PDEPar_while
+//  gcc PDEPar_while.c -fopenmp -o PDEPar_while
+// ./PDEPar_while 5000 50 30 100 1000000 4
 
 #define L 5 // Longitud de la barra
 
@@ -24,6 +24,7 @@ void displayArray(double arr[], int size);
 int main(int argc, char* argv[]) {
   double t0, tl, tr; //Declaracion de variables de temperatura inicial, temperatura extremo izquierdo y temperatura extremo derecho
   int N,iterations = 100;
+  int cont =0;
   double c = pow(10, -1);
   
 
@@ -62,31 +63,35 @@ int main(int argc, char* argv[]) {
     Ti_p1[i] = 0;
   }
 
-  #pragma omp parallel for num_threads(thread_count)
-  for (int i = 1; i <= iterations; i++) {
+  #pragma omp parallel num_threads(thread_count) 
+  {
+    //#pragma omp master 
+    while (cont <= iterations){
+      #pragma omp for 
+      for (int j=0; j<N; j++) {
+        // Calculo de las temperaturas
+        int thread_ID = omp_get_thread_num(); // Obteniendo el ID del hilo que se está ejecutando
+        double res = 0;
 
-    #pragma omp parallel for
-    for (int j=0; j<N; j++) {
-      // Calculo de las temperaturas
-      int thread_ID = omp_get_thread_num(); // Obteniendo el ID del hilo que se está ejecutando
-      double res = 0;
+        if(j==0) {
+          res = Ti[j]+(((c*deltat/(deltax*deltax)))*(tl-(2*Ti[j])+Ti[j+1]));
 
-      if(j==0) {
-        res = Ti[j]+(((c*deltat/(deltax*deltax)))*(tl-(2*Ti[j])+Ti[j+1]));
+        } else if(j==(N-1)) { //Calculo para la ultima temperatura
+          res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+tr));
+        
+        } else { //Calculo para las temperaturas del medio
+          res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
 
-      } else if(j==(N-1)) { //Calculo para la ultima temperatura
-        res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+tr));
-      
-      } else { //Calculo para las temperaturas del medio
-        res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
+        }
 
+        Ti_p1[j] = res;
+        
       }
-
-      Ti_p1[j] = res;
-      
+      copyArray(Ti_p1,Ti,N);
+      cont ++;
     }
-  copyArray(Ti_p1,Ti,N);
-}
+  }
+
 
   // Mostrar barra final
   displayArray(Ti,N);
