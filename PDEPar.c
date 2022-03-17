@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
     Ti_p1[i] = 0;
   }
 
-double temp_extremos[2*N] = {}; //Array de tamaño 2N en el cual se encuentran las temperaturas de los extremos para segmento de la barra
+double temp_extremos[2*N]; //Array de tamaño 2N en el cual se encuentran las temperaturas de los extremos para segmento de la barra
   for (int i = 1; i <= iterations; i++) {
     for (int j=0; j<N; j++) {
       // Calculo de las temperaturas
