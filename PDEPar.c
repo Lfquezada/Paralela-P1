@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
     Ti_p1[i] = 0;
   }
 
-  #pragma omp parallel for num_threads(thread_count) shared(Ti, Ti_p1)
+  #pragma omp parallel for num_threads(thread_count) shared(Ti, Ti_p1) schedule(dynamic, 1000)
   for (int i = 1; i <= iterations; i++) {
     #pragma omp parallel for
     for (int j=0; j<N; j++) {
