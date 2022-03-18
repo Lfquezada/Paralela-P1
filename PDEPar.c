@@ -62,9 +62,8 @@ int main(int argc, char* argv[]) {
     Ti_p1[i] = 0;
   }
 
-  #pragma omp parallel for num_threads(thread_count)
+  #pragma omp parallel for num_threads(thread_count) shared(Ti, Ti_p1)
   for (int i = 1; i <= iterations; i++) {
-
     #pragma omp parallel for
     for (int j=0; j<N; j++) {
       // Calculo de las temperaturas
@@ -81,10 +80,10 @@ int main(int argc, char* argv[]) {
         res = Ti[j]+(((c*deltat/(deltax*deltax)))*(Ti[j-1]-(2*Ti[j])+Ti[j+1]));
 
       }
-
       Ti_p1[j] = res;
       
     }
+  #pragma omp critical
   copyArray(Ti_p1,Ti,N);
 }
 
