@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
   // Mostrar barra final
   displayArray(Ti,N);
 
-  printf("VALORES: %d %f %f %f %d \n", N,t0,tl,tr, iterations);
+  printf("VALORES: Segmentos: %d T inicial barra: %f T_L %f T_R %f Iteraciones: %d \n", N,t0,tl,tr, iterations);
 
   // Mostrar delta de tiempo
   printf("Tiempo: %f\n",((float)c_clock)/CLOCKS_PER_SEC);

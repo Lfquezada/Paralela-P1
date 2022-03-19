@@ -14,7 +14,7 @@
 // Compilar y correr 
 // gcc-11 PDEPar.c -fopenmp -o PDEPar
 // gcc PDEPar.c -fopenmp -o PDEPar
-// ./PDEPar 5000 50 30 100 1000000 8
+// ./PDEPar 5000 50 30 100 1000000 16
 
 #define L 5 // Longitud de la barra
 
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
   // Mostrar barra final
   displayArray(Ti,N);
 
-  printf("VALORES: %d %f %f %f %d \n", N,t0,tl,tr, iterations);
+  printf("VALORES: Segmentos: %d T inicial barra: %f T_L %f T_R %f Iteraciones: %d \n", N,t0,tl,tr, iterations);
 
   // Mostrar delta de tiempo
   printf("Tiempo: %f\n",(t_fin - t_ini));
