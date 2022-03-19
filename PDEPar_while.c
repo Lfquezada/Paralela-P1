@@ -24,7 +24,7 @@ void displayArray(double arr[], int size);
 int main(int argc, char* argv[]) {
   double t0, tl, tr; //Declaracion de variables de temperatura inicial, temperatura extremo izquierdo y temperatura extremo derecho
   int N,iterations = 100;
-  int cont =0;
+
   double c = pow(10, -1);
   
 
@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
   tr = strtol(argv[4], NULL, 10); // Temperatura de la frontera derecha
   iterations = atoi(argv[5]);
   int thread_count = atoi(argv[6]);
+  int cont = iterations;
   //omp_set_num_threads(thread_count);
 
   //printf("VALORES: %f %f %f %f %d \n", N,t0,tl,tr, iterations);
@@ -63,10 +64,10 @@ int main(int argc, char* argv[]) {
     Ti_p1[i] = 0;
   }
 
-  #pragma omp parallel num_threads(thread_count) 
+  #pragma omp parallel num_threads(thread_count) firstprivate(cont)
   {
     //#pragma omp master 
-    while (cont <= iterations){
+    while (cont--){
       #pragma omp for 
       for (int j=0; j<N; j++) {
         // Calculo de las temperaturas
@@ -88,7 +89,6 @@ int main(int argc, char* argv[]) {
         
       }
       copyArray(Ti_p1,Ti,N);
-      cont ++;
     }
   }
 

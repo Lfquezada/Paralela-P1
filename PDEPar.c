@@ -40,7 +40,6 @@ int main(int argc, char* argv[]) {
   int thread_count = atoi(argv[6]);
   //omp_set_num_threads(thread_count);
 
-  //printf("VALORES: %f %f %f %f %d \n", N,t0,tl,tr, iterations);
 
   // Tiempo paralelo con omp
   double t_ini = omp_get_wtime();
@@ -62,7 +61,7 @@ int main(int argc, char* argv[]) {
     Ti_p1[i] = 0;
   }
 
-  #pragma omp parallel for num_threads(thread_count) shared(Ti, Ti_p1) schedule(dynamic, 1000)
+  #pragma omp parallel for num_threads(thread_count) shared(Ti, Ti_p1) schedule(dynamic, 640)
   for (int i = 1; i <= iterations; i++) {
     #pragma omp parallel for
     for (int j=0; j<N; j++) {
@@ -83,16 +82,20 @@ int main(int argc, char* argv[]) {
       Ti_p1[j] = res;
       
     }
-  #pragma omp critical
+  #pragma omp task
   copyArray(Ti_p1,Ti,N);
 }
+  
+  double t_fin = omp_get_wtime();
 
   // Mostrar barra final
   displayArray(Ti,N);
 
+  printf("VALORES: %d %f %f %f %d \n", N,t0,tl,tr, iterations);
+
   // Mostrar delta de tiempo
-  double t_fin = omp_get_wtime();
   printf("Tiempo: %f\n",(t_fin - t_ini));
+  
 
   return 0;
 }

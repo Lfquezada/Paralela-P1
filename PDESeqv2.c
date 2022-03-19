@@ -39,8 +39,6 @@ int main(int argc, char* argv[]) {
   tr = strtol(argv[4], NULL, 10); // Temperatura de la frontera derecha
   iterations = atoi(argv[5]);
 
-  //printf("VALORES: %f %f %f %f %d \n", N,t0,tl,tr, iterations);
-
   // Tiempo POSIX
   c_clock = clock();
   
@@ -70,12 +68,13 @@ int main(int argc, char* argv[]) {
     }
     copyArray(Ti_p1,Ti,N);
   }
-
+  c_clock = clock() - c_clock;
   // Mostrar barra final
   displayArray(Ti,N);
 
+  printf("VALORES: %d %f %f %f %d \n", N,t0,tl,tr, iterations);
+
   // Mostrar delta de tiempo
-  c_clock = clock() - c_clock;
   printf("Tiempo: %f\n",((float)c_clock)/CLOCKS_PER_SEC);
 
   return 0;
