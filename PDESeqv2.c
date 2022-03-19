@@ -4,6 +4,7 @@
   Luis Quezada        18028
   Esteban del Valle   18221
   Proyecto 1 
+  Programa Secuencial
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +12,7 @@
 #include <string.h>
 #include <time.h>
 
-// Compilar y correr 
+// Compilación y ejecución
 // gcc PDESeqv2.c -o PDESeqv2
 // ./PDESeqv2 5000 50 30 100 1000000
 
@@ -24,9 +25,9 @@ void displayArray(double arr[], int size);
 
 int main(int argc, char* argv[]) {
   clock_t c_clock;
-  double t0, tl, tr;
-  int N,iterations = 100;
-  double c = pow(10, -1);
+  double t0, tl, tr; //Declaracion de variables de temperatura inicial, temperatura extremo izquierdo y temperatura extremo derecho
+  int N,iterations = 100; //Declaración de variables de números de segmentos y cantidad de iteraciones de tiempo
+  double c = pow(10, -1); //Declaración de la constante de de difusividad térmica con valor de 1*10-1
 
   if (argc == 1) {
       printf("Usage: PDESeq partes_barra T_inicial T_left T_right iteraciones\n");
@@ -42,18 +43,15 @@ int main(int argc, char* argv[]) {
   // Tiempo POSIX
   c_clock = clock();
   
-  // Mitad de la barra para cálculo del error
-  int half = (int)((double)N/(double)2);
-
   // 1. División del dominio en intervalos discretos (tiempo y distancia)
   double deltax = (double)L/(double)N;
   double deltat = (deltax*deltax)/(2*c);
 
-  // 2. Ajustar los valores iniciales de los vectores de solución Ti y Ti+1, para tiempo i
+  // 2. Ajuste de los valores iniciales de los vectores de solución Ti y Ti+1, para tiempo i
   double Ti[N];
   double Ti_p1[N];
 
-  //Llenar los vectores de temperaturas iniciales y de solucion con la temperatura inicial y 0 respectivamente
+  //Asignación de los vectores de temperaturas iniciales y de solucion con la temperatura inicial y 0 respectivamente
   for (int i = 0; i<N; i++){
     Ti[i] = t0;
     Ti_p1[i] = 0;
@@ -68,7 +66,10 @@ int main(int argc, char* argv[]) {
     }
     copyArray(Ti_p1,Ti,N);
   }
+
+  //Finalización de toma de tiempo
   c_clock = clock() - c_clock;
+  
   // Mostrar barra final
   displayArray(Ti,N);
 
